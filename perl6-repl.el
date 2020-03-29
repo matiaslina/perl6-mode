@@ -39,12 +39,14 @@
 (defun perl6-send-line-to-repl ()
   "Send a line to the repl."
   (interactive)
+  (run-perl6)
   (let ((str (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
     (perl6-send-string-to-repl str)))
 
 (defun perl6-send-region-to-repl ()
   "Send a region to the repl."
   (interactive)
+  (run-perl6)
   (if (region-active-p)
       (let ((buf (buffer-substring-no-properties (region-beginning)
                                                  (region-end))))
@@ -54,6 +56,7 @@
 (defun perl6-send-buffer-to-repl ()
   "Send a buffer to the repl."
   (interactive)
+  (run-perl6)
   (let ((buf (buffer-substring-no-properties (point-min)
                                              (point-max))))
     (perl6-send-string-to-repl buf)))
