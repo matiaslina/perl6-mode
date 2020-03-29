@@ -19,17 +19,25 @@
 (defvar perl6-prompt-regexp "^> "
   "Prompt for `run-perl6'.")
 
+(defvar perl6-buffer-name "Raku REPL"
+  "Buffer name for `run-perl6.")
+
 (defun run-perl6 ()
-  "Run an inferior instance of `perl6' inside Emacs."
+  "Run an inferior instance of `raku' inside Emacs."
   (interactive)
   (let* ((perl6-program perl6-exec-path)
-         (check-proc (comint-check-proc "Raku"))
-         (buffer (apply 'make-comint-in-buffer "Raku" check-proc perl6-exec-path nil nil)))
+         (check-proc (comint-check-proc perl6-buffer-name))
+         (buffer (apply 'make-comint-in-buffer
+                        perl6-buffer-name
+                        check-proc
+                        perl6-exec-path
+                        '()
+                        (split-string perl6-exec-arguments))))
     (display-buffer buffer)))
 
 (defun perl6-comint-get-process ()
   "Raku process name."
-  (get-process "Raku"))
+  (get-process perl6-buffer-name))
 
 (defun perl6-send-string-to-repl (str)
   "Send STR to the repl."
